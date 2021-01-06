@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SoloCapstone.Data;
 using SoloCapstone.Models;
 using System;
@@ -11,54 +10,44 @@ using System.Threading.Tasks;
 
 namespace SoloCapstone.Controllers
 {
-    public class IngredientsController : Controller
+    public class RecipeFavoritesController : Controller
     {
         private ApplicationDbContext _context;
-        public IngredientsController(ApplicationDbContext context)
+        public RecipeFavoritesController(ApplicationDbContext context)
         {
             _context = context;
         }
-        // GET: IngredientsController
+        // GET: RecipeFavoritesController
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: IngredientsController/Details/5
+        // GET: RecipeFavoritesController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: IngredientsController/Create
+        // GET: RecipeFavoritesController/Create
         public ActionResult Create()
         {
-            Ingredient ingredient = new Ingredient();
-
             return View();
         }
 
-        // POST: IngredientsController/Create
+        // POST: RecipeFavoritesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Ingredient ingredient)
+        public ActionResult Create(RecipeFavorites recipeFavorites)
         {
             try
             {
-                //ingredient.ChefId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                //set the ingredient chefId equal to the chef's primary key
-                //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                Chef chef = _context.Chefs.Where(c => c.IdentityUserId == userId).FirstOrDefault();
-                if (chef == null)
-                {
-                    return RedirectToAction("Chef", "Create");
-                }
-                ingredient.ChefId = chef.ChefId;
-                _context.Ingredients.Add(ingredient);
+                Chef chef = _context.Chefs.Where(c => c.IdentityUserId == userId).FirstOrDefault();                
+                recipeFavorites.ChefId = chef.ChefId;
+                _context.RecipeFavorites.Add(recipeFavorites);
                 _context.SaveChanges();
-                return RedirectToAction("Chef","Index");
+                return RedirectToAction("Chef", "Index");
             }
             catch
             {
@@ -66,13 +55,14 @@ namespace SoloCapstone.Controllers
             }
         }
 
-        // GET: IngredientsController/Edit/5
+        // GET: RecipeFavoritesController/Edit/5
         public ActionResult Edit(int id)
         {
+            
             return View();
         }
 
-        // POST: IngredientsController/Edit/5
+        // POST: RecipeFavoritesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -87,24 +77,24 @@ namespace SoloCapstone.Controllers
             }
         }
 
-        // GET: IngredientsController/Delete/5
+        // GET: RecipeFavoritesController/Delete/5
         public ActionResult Delete(int id)
         {
-            Ingredient ingredient = _context.Ingredients.Where(i => i.IngredientId == id).FirstOrDefault();
+            RecipeFavorites recipeFavorites = _context.RecipeFavorites.Where(r => r.RecipeId == id).FirstOrDefault();
             return View();
         }
 
-        // POST: IngredientsController/Delete/5
+        // POST: RecipeFavoritesController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Ingredient ingredient)
+        public ActionResult Delete(RecipeFavorites recipeFavorites)
         {
             try
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                Chef chef = _context.Chefs.Where(c => c.IdentityUserId == userId).FirstOrDefault();                
-                ingredient.ChefId = chef.ChefId;
-                _context.Ingredients.Remove(ingredient);
+                Chef chef = _context.Chefs.Where(c => c.IdentityUserId == userId).FirstOrDefault();
+                recipeFavorites.ChefId = chef.ChefId;
+                _context.RecipeFavorites.Remove(recipeFavorites);
                 _context.SaveChanges();
                 return RedirectToAction("Chef", "Index");
             }

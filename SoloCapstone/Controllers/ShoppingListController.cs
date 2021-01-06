@@ -24,10 +24,11 @@ namespace SoloCapstone.Controllers
         }
 
         // GET: ShoppingListController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int ShoppingListId)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var shoppingList = _context.ShoppingList.Where(s => s.ShoppingListId.ToString() == userId);
+            List<ShoppingList> shoppingList = new List<ShoppingList>();
+            shoppingList = _context.ShoppingList.Where(s => s.ShoppingListId.ToString() == userId).ToList();
             return View(shoppingList);
         }
 
@@ -95,6 +96,7 @@ namespace SoloCapstone.Controllers
         {
             try
             {
+                shoppingList = _context.ShoppingList.Where(s => s.ShoppingListId == shoppingList.ShoppingListId).FirstOrDefault();
                 _context.Remove(shoppingList);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
