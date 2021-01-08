@@ -41,7 +41,7 @@
                 @Html.DisplayFor(modelItem => item.title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.image)
+                <img src="@item.image"/>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.imageType)
@@ -64,10 +64,3 @@
 }
     </tbody>
 </table>
-
-@*<form asp-controller="Ingredients"
-      asp-action="Create" method="post">
-    <input type="hidden"
-           name="guid" value="@Guid.NewGuid()" />
-    <button type="submit">Submit</button>
-</form>*@

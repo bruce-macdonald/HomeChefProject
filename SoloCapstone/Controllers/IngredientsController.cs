@@ -33,8 +33,6 @@ namespace SoloCapstone.Controllers
         // GET: IngredientsController/Create
         public ActionResult Create()
         {
-            Ingredient ingredient = new Ingredient();
-
             return View();
         }
 
@@ -53,12 +51,12 @@ namespace SoloCapstone.Controllers
                 Chef chef = _context.Chefs.Where(c => c.IdentityUserId == userId).FirstOrDefault();
                 if (chef == null)
                 {
-                    return RedirectToAction("Chef", "Create");
+                    return RedirectToAction("Create", "Chef");
                 }
                 ingredient.ChefId = chef.ChefId;
                 _context.Ingredients.Add(ingredient);
                 _context.SaveChanges();
-                return RedirectToAction("Chef","Index");
+                return RedirectToAction("Index","Chef");
             }
             catch
             {
@@ -106,7 +104,7 @@ namespace SoloCapstone.Controllers
                 ingredient.ChefId = chef.ChefId;
                 _context.Ingredients.Remove(ingredient);
                 _context.SaveChanges();
-                return RedirectToAction("Chef", "Index");
+                return RedirectToAction("Index", "Chef");
             }
             catch
             {

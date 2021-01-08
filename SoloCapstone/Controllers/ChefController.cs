@@ -49,7 +49,7 @@ namespace SoloCapstone.Controllers
             client.DefaultRequestHeaders.Add(APIKeys.header1key, APIKeys.header1value);
             client.DefaultRequestHeaders.Add(APIKeys.header2key, APIKeys.header2value);
             client.DefaultRequestHeaders.Add(APIKeys.header3key, APIKeys.header3value);
-            string testURL = $"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients={foodParameters}&number=5&ranking=1&ignorePantry=true";
+            string testURL = $"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients={foodParameters}";
             string apiURL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients";
             HttpResponseMessage response = await client.GetAsync(testURL);
             //Recipe recipe = new Recipe();
@@ -123,6 +123,28 @@ namespace SoloCapstone.Controllers
             }
         }
 
+        private async Task<Recipe> GetRecipeBySingleIngredient(Ingredient ingredient)
+        {
+            //header1.key, header1.value
+            List<Ingredient> ingredientToSearchWith = new List<Ingredient>();
+            ingredientToSearchWith.Add(ingredient);
+            string foodParameters = SetParameters(ingredientToSearchWith);
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add(APIKeys.header1key, APIKeys.header1value);
+            client.DefaultRequestHeaders.Add(APIKeys.header2key, APIKeys.header2value);
+            client.DefaultRequestHeaders.Add(APIKeys.header3key, APIKeys.header3value);
+            string testURL = $"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients={foodParameters}";
+            string apiURL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients";
+            HttpResponseMessage response = await client.GetAsync(testURL);
+            Recipe recipe = new Recipe();
+            //List<Recipe> recipes = new List<Recipe>();
+            if (response.IsSuccessStatusCode == true)
+            {
+                string jsonResult = await response.Content.ReadAsStringAsync();
+                recipe = JsonConvert.DeserializeObject<Recipe>(jsonResult);
+            }
+            return recipe;
+        }
         // GET: ChefController/Edit/5
         public ActionResult Edit(int id)
         {
