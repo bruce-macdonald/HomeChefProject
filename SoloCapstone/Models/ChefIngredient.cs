@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SoloCapstone.Models
 {
-    public class Ingredient
+    public class ChefIngredient
     {
         [Key]
         public int IngredientId { get; set; }

@@ -21,13 +21,19 @@ namespace SoloCapstone.Controllers
         // GET: IngredientsController
         public ActionResult Index()
         {
-            return View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            List<ChefIngredient> ingredients = new List<ChefIngredient>();
+            ingredients = _context.Ingredients.Where(i => i.IngredientId.ToString() == userId).ToList();
+            return View(ingredients);
         }
 
         // GET: IngredientsController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int IngredientId)
         {
-            return View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            List<ChefIngredient> ingredients = new List<ChefIngredient>();
+            ingredients = _context.Ingredients.Where(s => s.IngredientId.ToString() == userId).ToList();
+            return View(ingredients);
         }
 
         // GET: IngredientsController/Create
@@ -39,7 +45,7 @@ namespace SoloCapstone.Controllers
         // POST: IngredientsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Ingredient ingredient)
+        public ActionResult Create(ChefIngredient ingredient)
         {
             try
             {
@@ -88,14 +94,14 @@ namespace SoloCapstone.Controllers
         // GET: IngredientsController/Delete/5
         public ActionResult Delete(int id)
         {
-            Ingredient ingredient = _context.Ingredients.Where(i => i.IngredientId == id).FirstOrDefault();
+            ChefIngredient ingredient = _context.Ingredients.Where(i => i.IngredientId == id).FirstOrDefault();
             return View();
         }
 
         // POST: IngredientsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Ingredient ingredient)
+        public ActionResult Delete(ChefIngredient ingredient)
         {
             try
             {

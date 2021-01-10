@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using SoloCapstone.Data;
 using SoloCapstone.Models;
 using System;
 using System.Collections.Generic;
@@ -12,16 +13,21 @@ namespace SoloCapstone.Controllers
 {
     public class RecipeController : Controller
     {
-        // GET: RecipeController
-        public async Task<ActionResult> Index()
+        private ApplicationDbContext _context;
+        public RecipeController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
         }
+        // GET: RecipeController
+        //public async Task<ActionResult> Index()
+        //{
+        //    return View();
+        //}
 
         // GET: RecipeController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Recipe recipe)
         {
-            return View();
+            return View(recipe);
         }
         // GET: RecipeController/Create
         public ActionResult Create()

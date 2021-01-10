@@ -15,7 +15,7 @@ namespace SoloCapstone.Data
         }
 
         public DbSet<Chef> Chefs { get; set; }
-        public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<ChefIngredient> Ingredients { get; set; }
         public DbSet<RecipeFavorites> RecipeFavorites { get; set; }
         public DbSet<ShoppingList> ShoppingList { get; set; }
     }

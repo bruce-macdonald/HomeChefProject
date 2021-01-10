@@ -11,8 +11,11 @@ namespace SoloCapstone.Models
     {
         [Key]
         public int RecipeId { get; set; }
-        public string Item { get; set; }
-
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public string Image { get; set; }
+        public string ImageType { get; set; }
+        public int Likes { get; set; }
         [ForeignKey("Chef")]
         public int ChefId { get; set; }
         public Chef Chef { get; set; }

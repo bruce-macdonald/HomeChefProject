@@ -41,7 +41,7 @@ namespace SoloCapstone.Controllers
 
             return View(recipes);
         }
-        private async Task<List<Recipe>> GetRecipes(List<Ingredient> ingredients)
+        private async Task<List<Recipe>> GetRecipes(List<ChefIngredient> ingredients)
         {
             //header1.key, header1.value
             string foodParameters = SetParameters(ingredients);
@@ -61,7 +61,7 @@ namespace SoloCapstone.Controllers
             }
             return recipes;
         }
-        private string SetParameters(List<Ingredient> ingredients)
+        private string SetParameters(List<ChefIngredient> ingredients)
         {
             string returnURL = "";
             if (ingredients.Count != 0)
@@ -123,10 +123,10 @@ namespace SoloCapstone.Controllers
             }
         }
 
-        private async Task<Recipe> GetRecipeBySingleIngredient(Ingredient ingredient)
+        private async Task<Recipe> GetRecipeBySingleIngredient(ChefIngredient ingredient)
         {
             //header1.key, header1.value
-            List<Ingredient> ingredientToSearchWith = new List<Ingredient>();
+            List<ChefIngredient> ingredientToSearchWith = new List<ChefIngredient>();
             ingredientToSearchWith.Add(ingredient);
             string foodParameters = SetParameters(ingredientToSearchWith);
             HttpClient client = new HttpClient();
@@ -145,6 +145,27 @@ namespace SoloCapstone.Controllers
             }
             return recipe;
         }
+
+        //private async Task<List<Recipe>> GetRecipes(List<ChefIngredient> ingredients)
+        //{
+        //    //header1.key, header1.value
+        //    string foodParameters = SetParameters(ingredients);
+        //    HttpClient client = new HttpClient();
+        //    client.DefaultRequestHeaders.Add(APIKeys.header1key, APIKeys.header1value);
+        //    client.DefaultRequestHeaders.Add(APIKeys.header2key, APIKeys.header2value);
+        //    client.DefaultRequestHeaders.Add(APIKeys.header3key, APIKeys.header3value);
+        //    string testURL = $"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients={foodParameters}";
+        //    string apiURL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients";
+        //    HttpResponseMessage response = await client.GetAsync(testURL);
+        //    //Recipe recipe = new Recipe();
+        //    List<Recipe> recipes = new List<Recipe>();
+        //    if (response.IsSuccessStatusCode == true)
+        //    {
+        //        string jsonResult = await response.Content.ReadAsStringAsync();
+        //        recipes = JsonConvert.DeserializeObject<List<Recipe>>(jsonResult);
+        //    }
+        //    return recipes;
+        //}
         // GET: ChefController/Edit/5
         public ActionResult Edit(int id)
         {
