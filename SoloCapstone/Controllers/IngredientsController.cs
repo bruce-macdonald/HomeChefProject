@@ -22,8 +22,9 @@ namespace SoloCapstone.Controllers
         public ActionResult Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Chef chef = _context.Chefs.Where(c => c.IdentityUserId == userId).FirstOrDefault();
             List<ChefIngredient> ingredients = new List<ChefIngredient>();
-            ingredients = _context.Ingredients.Where(i => i.IngredientId.ToString() == userId).ToList();
+            ingredients = _context.Ingredients.Where(r => r.ChefId == chef.ChefId).ToList();
             return View(ingredients);
         }
 
@@ -94,8 +95,8 @@ namespace SoloCapstone.Controllers
         // GET: IngredientsController/Delete/5
         public ActionResult Delete(int id)
         {
-            ChefIngredient ingredient = _context.Ingredients.Where(i => i.IngredientId == id).FirstOrDefault();
-            return View();
+            var ingredient = _context.Ingredients.Where(i => i.IngredientId == id).FirstOrDefault();
+            return View(ingredient);
         }
 
         // POST: IngredientsController/Delete/5
@@ -105,12 +106,17 @@ namespace SoloCapstone.Controllers
         {
             try
             {
-                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                Chef chef = _context.Chefs.Where(c => c.IdentityUserId == userId).FirstOrDefault();                
-                ingredient.ChefId = chef.ChefId;
                 _context.Ingredients.Remove(ingredient);
                 _context.SaveChanges();
-                return RedirectToAction("Index", "Chef");
+                return RedirectToAction("Index", "Ingredients");
+                //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                //Chef chef = _context.Chefs.Where(c => c.IdentityUserId == userId).FirstOrDefault();
+                //ingredient = _context.Ingredients.Where(i => i.IngredientId == ingredient.IngredientId).FirstOrDefault();
+                ////have to set get the ingredients for that chef, not the chef ID
+                ////It was always removing the first instance on the list of ingredients - @the ID of 1 - the chef ID
+                //_context.Ingredients.Remove(ingredient);
+                //_context.SaveChanges();
+                //return RedirectToAction("Index", "Ingredients");
             }
             catch
             {
