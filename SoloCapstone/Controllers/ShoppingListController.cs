@@ -20,7 +20,11 @@ namespace SoloCapstone.Controllers
         // GET: ShoppingListController
         public ActionResult Index()
         {
-            return View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Chef chef = _context.Chefs.Where(c => c.IdentityUserId == userId).FirstOrDefault();
+            List<ShoppingList> shoppingLists = new List<ShoppingList>();
+            shoppingLists = _context.ShoppingList.Where(r => r.ChefId == chef.ChefId).ToList();
+            return View(shoppingLists);
         }
 
         // GET: ShoppingListController/Details/5
@@ -50,7 +54,7 @@ namespace SoloCapstone.Controllers
                 shoppingListItem.ChefId = chef.ChefId;
                 _context.ShoppingList.Add(shoppingListItem);
                 _context.SaveChanges();
-                return RedirectToAction("Chef", "Index");
+                return RedirectToAction("Index", "ShoppingList");
             }
             catch
             {
@@ -85,14 +89,14 @@ namespace SoloCapstone.Controllers
         // GET: ShoppingListController/Delete/5
         public ActionResult Delete(int id)
         {
-            ShoppingList shoppingListItem = _context.ShoppingList.Where(s => s.ShoppingListId == id).FirstOrDefault();
-            return View();
+            var shopItemToRemove = _context.ShoppingList.Where(i => i.ShoppingListId == id).FirstOrDefault();
+            return View(shopItemToRemove);
         }
 
         // POST: ShoppingListController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int ShoppingListId, ShoppingList shoppingList)
+        public ActionResult Delete(ShoppingList shoppingList)
         {
             try
             {
