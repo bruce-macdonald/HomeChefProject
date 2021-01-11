@@ -65,7 +65,7 @@ namespace SoloCapstone.Controllers
                 recipeFavorite.Likes = recipe.aggregateLikes;
                 _context.RecipeFavorites.Add(recipeFavorite);
                 _context.SaveChanges();
-                return RedirectToAction("Index", "Chef");
+                return RedirectToAction("Index", "RecipeFavorites");
             }
             catch
             {
@@ -73,27 +73,27 @@ namespace SoloCapstone.Controllers
             }
         }
 
-        // POST: RecipeFavoritesController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult> Create(Recipe recipe)
-        //{
-        //    try
-        //    {
-        //        var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //        Chef chef = _context.Chefs.Where(c => c.IdentityUserId == userId).FirstOrDefault();
-        //        RecipeFavorites recipeFavorite = new RecipeFavorites();
-        //        //recipeFavorite.Item = id.ToString();
-        //        recipeFavorite.ChefId = chef.ChefId;
-        //        _context.RecipeFavorites.Add(recipeFavorite);
-        //        _context.SaveChanges();
-        //        return RedirectToAction("Index", "Chef");
-        //    }
-        //    catch
-        //    {
-        //        return RedirectToAction("Chef", "Index");
-        //    }
-        //}
+        //POST: RecipeFavoritesController/Create
+       [HttpPost]
+       [ValidateAntiForgeryToken]
+        public ActionResult Create(Recipe recipe)
+        {
+            try
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                Chef chef = _context.Chefs.Where(c => c.IdentityUserId == userId).FirstOrDefault();
+                RecipeFavorites recipeFavorite = new RecipeFavorites();
+                //recipeFavorite.Item = id.ToString();
+                recipeFavorite.ChefId = chef.ChefId;
+                _context.RecipeFavorites.Add(recipeFavorite);
+                _context.SaveChanges();
+                return RedirectToAction("Index", "RecipeFavorites");
+            }
+            catch
+            {
+                return RedirectToAction("Chef", "Index");
+            }
+        }
 
         // GET: RecipeFavoritesController/Edit/5
         public ActionResult Edit(int id)

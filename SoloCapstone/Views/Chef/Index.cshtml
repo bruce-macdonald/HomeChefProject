@@ -6,10 +6,9 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
+@*<p>
     <a asp-action="Create" asp-controller="Ingredients">Create New Ingredient</a>    
-</p>
+</p>*@
 <table class="table">
     <thead>
         <tr>
@@ -19,9 +18,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.image)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.imageType)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.usedIngredientCount)
             </th>
@@ -42,9 +39,6 @@
             </td>
             <td>
                 <img src="@item.image"/>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.imageType)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.usedIngredientCount)
