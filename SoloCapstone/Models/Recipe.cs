@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SoloCapstone.Models
+﻿namespace SoloCapstone.Models
 {
     public class Recipe
     {
-        
         public int id { get; set; }
         public string title { get; set; }
         public string image { get; set; }
@@ -18,11 +10,11 @@ namespace SoloCapstone.Models
         public int missedIngredientCount { get; set; }
         public Missedingredient[] missedIngredients { get; set; }
         public Usedingredient[] usedIngredients { get; set; }
-       
+
         public object[] unusedIngredients { get; set; }
         public int likes { get; set; }
     }
-    
+
     public class Missedingredient
     {
         public int id { get; set; }
@@ -40,7 +32,7 @@ namespace SoloCapstone.Models
         public string extendedName { get; set; }
         public string image { get; set; }
     }
-   
+
     public class Usedingredient
     {
         public int id { get; set; }
@@ -57,6 +49,4 @@ namespace SoloCapstone.Models
         public object[] meta { get; set; }
         public string image { get; set; }
     }
-
-
 }

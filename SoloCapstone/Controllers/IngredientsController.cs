@@ -1,23 +1,22 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SoloCapstone.Data;
 using SoloCapstone.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace SoloCapstone.Controllers
 {
     public class IngredientsController : Controller
     {
         private ApplicationDbContext _context;
+
         public IngredientsController(ApplicationDbContext context)
         {
             _context = context;
         }
+
         // GET: IngredientsController
         public ActionResult Index()
         {
@@ -63,7 +62,7 @@ namespace SoloCapstone.Controllers
                 ingredient.ChefId = chef.ChefId;
                 _context.Ingredients.Add(ingredient);
                 _context.SaveChanges();
-                return RedirectToAction("Index","Chef");
+                return RedirectToAction("Index", "Chef");
             }
             catch
             {

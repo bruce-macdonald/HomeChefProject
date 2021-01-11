@@ -7,8 +7,8 @@
 <h1>Index</h1>
 
 @*<p>
-    <a asp-action="Create" asp-controller="Ingredients">Create New Ingredient</a>    
-</p>*@
+        <a asp-action="Create" asp-controller="Ingredients">Create New Ingredient</a>
+    </p>*@
 <table class="table">
     <thead>
         <tr>
@@ -18,7 +18,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.image)
             </th>
-            
+
             <th>
                 @Html.DisplayNameFor(model => model.usedIngredientCount)
             </th>
@@ -32,27 +32,28 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.title)
-            </td>
-            <td>
-                <img src="@item.image"/>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.usedIngredientCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.missedIngredientCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.likes)
-            </td>
-            <td>
-                @Html.ActionLink("Add to favorites", "Create","RecipeFavorites", new { id = item.id }, null) |
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    <img src="@item.image" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.usedIngredientCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.missedIngredientCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.likes)
+                </td>
+                <td>
+                    @Html.ActionLink("Add to favorites", "Create", "RecipeFavorites", new { id = item.id }, null) |
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

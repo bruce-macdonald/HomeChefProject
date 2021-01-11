@@ -1,5 +1,3 @@
-using System;
-
 namespace SoloCapstone.Models
 {
     public class ErrorViewModel

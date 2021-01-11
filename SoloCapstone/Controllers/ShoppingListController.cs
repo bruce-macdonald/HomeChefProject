@@ -1,22 +1,21 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SoloCapstone.Data;
 using SoloCapstone.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace SoloCapstone.Controllers
 {
     public class ShoppingListController : Controller
     {
         private ApplicationDbContext _context;
+
         public ShoppingListController(ApplicationDbContext context)
         {
             _context = context;
         }
+
         // GET: ShoppingListController
         public ActionResult Index()
         {
@@ -50,7 +49,7 @@ namespace SoloCapstone.Controllers
             try
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                Chef chef = _context.Chefs.Where(c => c.IdentityUserId == userId).FirstOrDefault();                
+                Chef chef = _context.Chefs.Where(c => c.IdentityUserId == userId).FirstOrDefault();
                 shoppingListItem.ChefId = chef.ChefId;
                 _context.ShoppingList.Add(shoppingListItem);
                 _context.SaveChanges();

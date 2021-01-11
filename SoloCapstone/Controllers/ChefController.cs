@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SoloCapstone.Data;
 using SoloCapstone.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -15,20 +14,22 @@ namespace SoloCapstone.Controllers
     public class ChefController : Controller
     {
         private ApplicationDbContext _context;
+
         public ChefController(ApplicationDbContext context)
         {
             _context = context;
         }
+
         // GET: ChefController
         public async Task<ActionResult> IndexAsync()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var chef = _context.Chefs.Where(c => c.IdentityUserId == userId).SingleOrDefault();
-            if (chef ==  null)
+            if (chef == null)
             {
                 return RedirectToAction("Create");
             }
-            
+
             //IndexViewModel indexViewModel = new IndexViewModel();
             //indexViewModel.Chef = chef;
             ////indexViewModel.Recipes i want to set it equal to this recipes below
@@ -41,6 +42,7 @@ namespace SoloCapstone.Controllers
 
             return View(recipes);
         }
+
         private async Task<List<Recipe>> GetRecipes(List<ChefIngredient> ingredients)
         {
             //header1.key, header1.value
@@ -61,6 +63,7 @@ namespace SoloCapstone.Controllers
             }
             return recipes;
         }
+
         private string SetParameters(List<ChefIngredient> ingredients)
         {
             string returnURL = "";
@@ -74,10 +77,11 @@ namespace SoloCapstone.Controllers
             }
             else
             {
-                returnURL="apples";
+                returnURL = "apples";
             }
             return returnURL;
         }
+
         //GET: ChefController/AddIngredient/IngredientName hopefully this works :|
         //public ActionResult AddIngredient(string? ingredientName)
         //{

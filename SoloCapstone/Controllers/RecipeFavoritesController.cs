@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SoloCapstone.Data;
 using SoloCapstone.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
@@ -15,10 +13,12 @@ namespace SoloCapstone.Controllers
     public class RecipeFavoritesController : Controller
     {
         private ApplicationDbContext _context;
+
         public RecipeFavoritesController(ApplicationDbContext context)
         {
             _context = context;
         }
+
         // GET: RecipeFavoritesController
         public ActionResult Index()
         {
@@ -39,7 +39,6 @@ namespace SoloCapstone.Controllers
         {
             try
             {
-                
                 HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add(APIKeys.header1key, APIKeys.header1value);
                 client.DefaultRequestHeaders.Add(APIKeys.header2key, APIKeys.header2value);
@@ -74,8 +73,8 @@ namespace SoloCapstone.Controllers
         }
 
         //POST: RecipeFavoritesController/Create
-       [HttpPost]
-       [ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Recipe recipe)
         {
             try
@@ -98,7 +97,6 @@ namespace SoloCapstone.Controllers
         // GET: RecipeFavoritesController/Edit/5
         public ActionResult Edit(int id)
         {
-
             return View();
         }
 
